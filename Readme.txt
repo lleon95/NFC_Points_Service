@@ -43,7 +43,7 @@ Some of there protocols are:
     - Nomenclature: 
         Variables name must be respected to guarantee a properly coupling between different subsystems.
         For example:
-            * lectorID: is the reader ID. It will be unique to every readers.
+            * readerID: is the reader ID. It will be unique to every readers.
             * cardID: is the cardID. Each card has its own ID and helps to identify a spectific user account.
     - Communication API:
         Backend communication is based in RESTful APIs. That means that all the access will be done through
@@ -51,14 +51,14 @@ Some of there protocols are:
         For example:
             * PaymentRequest: this API substract credit from the user's account. 
                 URL: /readers/substractPointsRequest
-                PARAMS: lectorID, cardID, cardToken, lectorToken, points
+                PARAMS: readerID, cardID, cardToken, readerToken, points
                 RETURN: cardID, error, result: {pointsAmountRemaining, pointsSubstracted}
     - Error coding:
         Instead expressing the errors using text, we could coded them in order to compress them and ease their transmition. 
         For example:
             * error[10] = "Some parameters are missing"
     - Definitions:
-        One needs to define some constants, such as lectorID, points, etc. These constants should be saved in a definitions file
+        One needs to define some constants, such as readerID, points, etc. These constants should be saved in a definitions file
         named "definitions.js" or "definitions.py". It will ease the changes in further implementations.
     - Security Standards:
         MiFare will be used as technology in our NFC cards. This implies assign a cardToken into the memory of each card as basic
@@ -162,10 +162,10 @@ Thus, the workflow is:
     2. PN532 reads the memory using the password (12345678) and returns the content in console
     3. The script collects the memory data and creates and object as follows:
         obj = {
-            lectorID: it's a constant
+            readerID: it's a constant
             cardID: it's the UUID read
             cardToken: it's the memory content deciphered
-            lectorToken: it's a constant
+            readerToken: it's a constant
             points: it's defined by three buttons (1st: 500 points, 2nd: 1000 points, 3rd: 5000 points)
         }
     4. Afterwards, the object should be posted onto the API request:
@@ -208,10 +208,10 @@ TYPE: HTTP POST
 URL: /readers/substractPointsRequest
 POST DATA: 
     {
-        lectorID: it's a constant
+        readerID: it's a constant
         cardID: it's the UUID read
         cardToken: it's the memory content deciphered
-        lectorToken: it's a constant
+        readerToken: it's a constant
         points: it's defined by three buttons (1st: 500 points, 2nd: 1000 points, 3rd: 5000 points)
     }
 RETURN:
@@ -230,10 +230,10 @@ TYPE: HTTP POST
 URL: /readers/addPointsRequest
 POST DATA: 
     {
-        lectorID: it's a constant
+        readerID: it's a constant
         cardID: it's the UUID read
         cardToken: it's the memory content deciphered
-        lectorToken: it's a constant
+        readerToken: it's a constant
         points: it's fixed to 1000 points
     }
 RETURN:

@@ -15,7 +15,20 @@ const models = require('./models/mongoModels.js');
 // There are three: userSch, cardSch, logSch
 
 /*
-    Mongoose and Mongo Schemas
+    Express and app management
+*/
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+server.listen(1337);
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());                         // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+var cookie = require('cookie');                     // Support for cookies
+var bcrypt = require('bcrypt');                     // Hashing
+
+/*
+    Communication between reader and Backend
 */
 
 

@@ -42,6 +42,16 @@ var card = new mongoose.Schema({
     token:              {type: "string", default: ""}         // This content must be equal to the card content
 }, { usePushEach: true });
 
+// Readers schema
+var reader = new mongoose.Schema({
+    // User
+    userID:              {type: "objectId"},
+    username:            {type: "string"}, 
+    // Details
+    readerID:            {type: "string", unique: true},
+    readerToken:         {type: "string"}                     // Works as a password
+},{ usePushEach: true });
+
 // Transactions
 var log = new mongoose.Schema({
     // User details
@@ -57,5 +67,6 @@ module.exports = {
     mongoose    : mongoose,
     userSch     : mongoose.model('users', user),
     cardSch     : mongoose.model('cards', card),
-    logSch      : mongoose.model('logs', log)
+    logSch      : mongoose.model('logs', log),
+    readerSch   : mongoose.model('readers', reader)
 };
