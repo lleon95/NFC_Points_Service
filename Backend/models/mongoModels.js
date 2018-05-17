@@ -19,22 +19,22 @@ db.once('open', function() {
 });
 
 // Users schema
-var user = new mongoose.Schema({
+var user = mongoose.Schema({
     // User data
     username:           {type: "string", unique: true},
     password:           {type: "string", default: "1234"},
     email:              {type: "string", default: ""},
     name:              {type: "string", default: ""},
     // Points data
-    balance:            {type: "Number", default: 0},         // Start with 0 points
+    balance:            {type: "Number", default: 1000},         // Start with 0 points
     // Card data
-    linkedCard:         {type: "string", default: ""},
+    linkedCard:         {type: "string", default:""},
     // Role
     role:            {type: "Number", default: 0},            // 0 for user, 1 for server and 666 for root
 }, { usePushEach: true, timestamps: { createdAt: 'created_at' }  });
 
 // Cards schema
-var card = new mongoose.Schema({
+var card = mongoose.Schema({
     // Card UUID
     uuid:               {type: "string", unique: true},
     password:           {type: "string", default: ""},
@@ -43,7 +43,7 @@ var card = new mongoose.Schema({
 }, { usePushEach: true });
 
 // Readers schema
-var reader = new mongoose.Schema({
+var reader = mongoose.Schema({
     // User
     userID:              {type: "objectId"},
     username:            {type: "string"}, 
@@ -53,7 +53,7 @@ var reader = new mongoose.Schema({
 },{ usePushEach: true });
 
 // Transactions
-var log = new mongoose.Schema({
+var log = mongoose.Schema({
     // User details
     userID:              {type: "objectId"},
     // Description
