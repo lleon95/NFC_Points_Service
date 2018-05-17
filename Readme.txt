@@ -245,3 +245,5 @@ RETURN:
             pointsAdded
         }
     }
+
+NOTE: both API have already been implemented!
