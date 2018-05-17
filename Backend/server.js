@@ -39,7 +39,7 @@ var cookie = require('cookie');                     // Support for cookies
     Communication between reader and Backend
 */
 require('./routes/readers/substractPointsRequest.js')(app, models, errors, defs);
-
+require('./routes/readers/addPointsRequest.js')(app, models, errors, defs);
 /*
     Debuggers
 */

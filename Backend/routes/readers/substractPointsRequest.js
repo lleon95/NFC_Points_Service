@@ -78,7 +78,7 @@ module.exports = function(app, models, errors, defs)
                                         {
                                             console.log("Readers/Substractor Success: User " + user.username + " has made a payment");
                                             // Substract
-                                            user.balance -= dataGot.points;
+                                            user.balance -= Number(dataGot.points);
                                             user.save();
                                             // Register in log
                                             var log = new models.logSch();

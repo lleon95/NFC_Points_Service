@@ -17,5 +17,13 @@ module.exports = {
         creditsNotEnough:4,
         authCardError:5,
         authReaderError:6
+    },
+    addPointsRequest:
+    {
+        readerNotFound:1,
+        cardNotFound:2,
+        userNotFound:3,
+        authCardError:5,
+        authReaderError:6
     }
 };
