@@ -26,7 +26,7 @@ var user = mongoose.Schema({
     email:              {type: "string", default: ""},
     name:              {type: "string", default: ""},
     // Points data
-    balance:            {type: "Number", default: 1000},         // Start with 0 points
+    balance:            {type: "Number", default: 0},         // Start with 0 points
     // Card data
     linkedCard:         {type: "string", default:""},
     // Role

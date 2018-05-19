@@ -1,6 +1,6 @@
 *********************************
     Readme
-    Last Updated: May 1st 2018
+    Last Updated: May 18th 2018
     Architect: Luis Leon
 *********************************
 
@@ -117,6 +117,10 @@ For backend:
                 + Missing now
             - data/
                 + Missing now
+            - root/
+                + addUser.js
+                + editUser.js
+                + deleteUser.js
 
 For frontend: to define
 
@@ -247,3 +251,60 @@ RETURN:
     }
 
 NOTE: both API have already been implemented!
+
+
+----------------------------------
+5. System Requirements for backend
+----------------------------------
+
+    5.1. Work flow
+
+    First, the role must be define before going on:
+
+    a) Role = 666:
+        It's the root user. It could add, edit and delete users. It does not have credit and those stuff as a normal user.
+        It could change the card of a user.
+    b) Role = 1:
+        It's the seller or merchant. They manage their credit (see), could add and substract points using the API and a "virtual reader".
+    c) Role = 0:
+        It's a normal user. It only could see their credit.
+
+    Defined those aspects, the workflows are as following:
+
+    a) User management
+
+         -> |Add new user|                             |username, password, email, name, role| (addUser.js)     all are postable scripts
+    ROOT -> |Edit user   |   -> Required parameters -> |password, linkedCard, email, balance | (editUser.js)    all are postable scripts
+         -> |Remove user |                             |username                             | (deleteUser.js)  all are postable scripts
+
+
+    USER, SELLER -> |Edit user|  -> Required parameters -> |username, sessionToken, email (editable), name (editable) | (editUser.js)
+
+    b) Reader management
+
+         -> | Add reader    |                           |readerID, username, userID, readerToken  | (addReader.js)      all are postable scripts
+    ROOT -> | Edit reader   | -> Required parameters -> |readerID, username, userID, readerToken  | (editReader.js)     all are postable scripts
+         -> | Remove reader |                           |readerID                                 | (deleteReader.js)   all are postable scripts
+
+    SELLER -> |See my reader details| -> Required parameters -> |username, sessionToken, readerID| -> Shown values -> |username, readerID|
+
+    c) Card management
+
+    USER -> | See card details | -> Required -> |username, sessionToken| -> Shown values -> |UUID|
+
+         -> | Add card    |                           |uuid, password, token, username  | (addReader.js)      all are postable scripts
+    ROOT -> | Edit card   | -> Required parameters -> |uuid, password, token, username  | (editReader.js)     all are postable scripts
+         -> | Remove card |                           |uuid                             | (deleteReader.js)   all are postable scripts
+
+    d) General details
+
+    - The user could see their balance, name and transactions (using log)
+    
+    
+    5.2. Block diagram and description
+    5.3. I/O modules
+    5.4. Debuggers
+6. System Requirements for website
+    6.1. Work flow
+    6.2. Pages
+    6.3. Communication Requirements
