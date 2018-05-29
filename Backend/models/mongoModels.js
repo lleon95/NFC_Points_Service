@@ -23,6 +23,7 @@ var user = mongoose.Schema({
     // User data
     username:           {type: "string", unique: true},
     password:           {type: "string", default: "1234"},
+    token:              {type: "string", default: ""},
     email:              {type: "string", default: ""},
     name:              {type: "string", default: ""},
     // Points data

@@ -76,7 +76,7 @@ module.exports = function(app, models, errors, defs)
                                         // Register in log
                                         var log = new models.logSch();
                                         log.userID = user._id;
-                                        log.concept = "Payment of " + dataGot.points + " in the reader " + reader.readerID + " for " + reader.username;
+                                        log.concept = "Recharge of " + dataGot.points + " in the reader " + reader.readerID + " for " + user.username +" from " + reader.username;
                                         log.points = dataGot.points;
                                         log.server = reader.userID;
                                         log.save();

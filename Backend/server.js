@@ -40,6 +40,19 @@ var cookie = require('cookie');                     // Support for cookies
 */
 require('./routes/readers/substractPointsRequest.js')(app, models, errors, defs);
 require('./routes/readers/addPointsRequest.js')(app, models, errors, defs);
+
+/*
+    User app
+*/
+require('./routes/users/getUserDetails.js')(app, models, errors, defs, cookie);
+require('./routes/users/login.js')(app, models, errors, defs, cookie);
+require('./routes/users/logout.js')(app, models, errors, defs, cookie);
+
+/*
+    Frontend
+*/
+require('./routes/app.js')(app);
+
 /*
     Debuggers
 */
@@ -57,7 +70,7 @@ reader.userID = models.mongoose.Types.ObjectId("5afce01887713d00335fc3ef");
 reader.save();
 
 var card = new models.cardSch();
-card.UUID = "00 00 00 00";
+card.uuid = "00 00 00 00";
 card.password = "null";
 card.token = "token";
 card.save();
@@ -74,3 +87,4 @@ userTest.password = "test";
 userTest.role = 0;
 userTest.linkedCard = card._id;
 userTest.save(); */
+

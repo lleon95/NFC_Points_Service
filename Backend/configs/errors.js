@@ -25,5 +25,10 @@ module.exports = {
         userNotFound:3,
         authCardError:5,
         authReaderError:6
+    },
+    generalPurpose:
+    {
+        userNotFound:3,
+        authError:6
     }
 };
