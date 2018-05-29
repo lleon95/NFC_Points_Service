@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>NFC Points Service</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/cover.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <img src="img/logo.svg" width="40px" alt="">
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="#" id="homeBtn">Home</a>
+                <a class="nav-link" href="#" id="logBtn">Transactions</a>
+                <a class="nav-link" href="#" id="logoutLink">Log out</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover" id="homeDiv" style="display:block">
+            <h1 class="cover-heading" id="welcomeMessage">Bienvenido Unknown</h1>
+            <br>
+            <h1><b id="balanceMessage">&#8353 0</b></h1>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-secondary">Balance</a>
+            </p>
+            <br>
+            <p class="lead">
+                Tarjeta Vinculada:
+            </p>
+            <p class="lead" id="cardMessage">
+                <b>Unknown</b>
+            </p> 
+          </div>
+
+          <div class="inner cover" id="logDiv" style="display:none">
+            <h1 class="cover-heading" id="welcomeMessage">Transacciones</h1>
+            <br>
+            <div class="panel panel-default">
+              
+                <!-- Table -->
+                <table class="table" style="text-align:left">
+                  <thead>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th>Hora</th>
+                    <th>Puntos</th>
+                  </thead>
+                  <tbody id="logTable">
+                      <tr>
+                          <th scope="row">#</th>
+                          <td>ss</td>
+                          <td>df</td>
+                          <td>ff</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>NFC Points Service - 2018</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" ></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+      // Load data
+      function loadData(){
+        // Verify if there is data
+        $.getJSON("/users/getUserDetails", function(data)
+        {
+          if(data.error == 6 || data.error == 3) // Auth Error
+          {
+            window.location.href = "login.html";
+          }
+          else
+          {
+            // Messages
+            $("#welcomeMessage").html("Bienvenido <b>"+ data.result.name + "</b>");
+            $("#balanceMessage").html("&#8353 " + data.result.balance);
+            $("#cardMessage").html("<b>" + data.result.linkedCard + "</b>");
+            // Logs
+            var c = 1;
+            $("#logTable").empty();
+            data.result.logs.forEach(function(element) {
+              var d = new Date(element.created_at);
+              var tranDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate() + " " + d.getHours() +":"+ d.getMinutes();
+              $("#logTable").append('<tr><th scope="row">'+c+'</th><td>'+element.concept+'</td><td>'+tranDate+'</td><td>'+element.points+'</td></tr>');
+              c++;
+            }, this);
+          }
+        });
+      }
+      // On load function
+      $(function(){
+        loadData();
+        setInterval(function(){loadData();},15000);
+      });
+      // Logoff
+      $("#logoutLink").click(function()
+      {
+        $.getJSON("/logout", function(data){
+          if(data.result == 0)
+          {
+            window.location.href = "login.html";
+          }
+        });
+      });
+      // Transactions
+      $("#logBtn").click(function()
+      {
+        $("#homeDiv").hide();
+        $("#logDiv").fadeIn();
+      });
+      // Home
+      $("#homeBtn").click(function()
+      {
+        $("#logDiv").hide();
+        $("#homeDiv").fadeIn();
+      });
+      
+    </script>
+  </body>
+</html>

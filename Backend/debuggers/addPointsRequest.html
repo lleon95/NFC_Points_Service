@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Add Points Request - Debugger</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <!--
+            readerID, cardID, cardToken, readerToken, points
+        -->
+        <form action="" method="POST" id="registerdata">
+            <h2>Reader access:</h2>
+            <br>
+            <table>
+                <tr>
+                    <td>readerID: </td>
+                    <td><input type="text" name="readerID"></td>
+                </tr>
+                <tr>
+                    <td>readerToken: </td>
+                    <td><input type="text" name="readerToken"></td>
+                </tr>
+            </table>
+            <br>
+            <h2>Card data:</h2>
+            <br>
+            <table>
+                <tr>
+                    <td>cardID: </td>
+                    <td><input type="text" name="cardID"></td>
+                </tr>
+                <tr>
+                    <td>cardToken: </td>
+                    <td><input type="text" name="cardToken"></td>
+                </tr>
+            </table>
+            <br>
+            <h2>Points to add:</h2>
+            <br>
+            <table>
+                <tr>
+                    <td>points: </td>
+                    <td><input type="text" name="points"></td>
+                </tr>
+            </table>
+            <br>
+            <input type="submit" name="submit" id="" value="Enviar">
+            <p>Results:</p>
+            <div id="results"></div>
+        </form>
+    </body>
+    <script>
+        $( "#registerdata" ).submit(function( event ) {
+    
+            // Stop form from submitting normally
+            event.preventDefault();
+            
+            // Get some values from elements on the page:
+            var $form = $( this ),
+            url = "/readers/addPointsRequest";
+
+
+            // Serialize data
+            var serialize = $(this).serialize();
+            
+            // Send the data using post
+            var posting = $.post(url, serialize);
+            
+            // Put the results in a div
+            posting.done(function( data ) {
+                $( "#results" ).html( JSON.stringify(data) );
+            });
+        });
+
+        //{"Nodes":"1", "Steps":"100", "NetSize":"10", "InitConsts":"1", "neurons":"1", "delta":"100"}
+    </script>
+</html>
