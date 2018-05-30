@@ -81,7 +81,7 @@ module.exports = function(app, models, errors, defs)
                                         log.server = reader.userID;
                                         log.save();
                                         // Increase the points
-                                        models.users.update({"_id":reader.userID}, {$inc:{"balance":-dataGot.points}});
+                                        models.userSch.update({"_id":reader.userID}, {$inc:{"balance":-dataGot.points}});
                                         // Return
                                         res.json({cardID: card.uuid, error:0, result:{pointsAmountRemaining: user.balance, pointsAdded:dataGot.points}});
                                     }
