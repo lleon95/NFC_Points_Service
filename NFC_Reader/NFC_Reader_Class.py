@@ -30,14 +30,13 @@ GPIO.setup(23, GPIO.IN, pull_up_down = GPIO.PUD_UP) #Set pull up resistor
 GPIO.setup(24, GPIO.IN, pull_up_down = GPIO.PUD_UP) #Set pull up resistor
 GPIO.setup(25, GPIO.IN, pull_up_down = GPIO.PUD_UP) #Set pull up resistor
 
-GPIO.setup(12, GPIO.IN) #Add or Substract points 
+GPIO.setup(12, GPIO.IN, pull_up_down = GPIO.PUD_UP) #Add or Substract points 
 
 
  
-class Transaccion (mifare.Mifare):
-    pass
+class Transaccion (Mifare):
     def __init__(self):
-        mifare.Mifare.__init__(self)
+        Mifare.__init__(self)
         self.readerID = 'reader1'
         self.cardID = '' #UID
         self.cardToken = '' #User ID -> Cédula
@@ -51,18 +50,11 @@ class Transaccion (mifare.Mifare):
         self.set_max_retries(MIFARE_WAIT_FOR_ENTRY) #Waits until entry
 
     def Dev_get_UUID(self):
-    """
-    Captures UUID
-    """
         UUID = self.scan_field() # Capture Device's ID
-        self.cardID = self.bytearray_to_str(UUID,4)
+        self.cardID = self.bytearray_to_str(UUID)
         return UUID
 
     def Dev_Auth(self,sector):
-    """
-    This method authenticates tag with
-    factory configuration
-    """	
         self.sector = sector
         address = self.mifare_address(sector,1) # Sets address
         self.mifare_auth_a(address,MIFARE_FACTORY_KEY)
@@ -74,16 +66,13 @@ class Transaccion (mifare.Mifare):
         if self.password == dev_pw: # CONVERSION FROM BYTEARRAY
             address = self.mifare_address(self.sector,2)
             CT = self.mifare_read(address)
-            self.cardToken = self.bytearray_to_str(CT,4)
+            self.cardToken = self.bytearray_to_str(CT)
             return False
         else:
             print ("Invalid credentials")
             return True
 
     def transfer_points(self):
-    """
-    Sets data in json format
-    """
         return {
             'readerID': self.readerID,
             'cardID': self.cardID,
@@ -92,17 +81,12 @@ class Transaccion (mifare.Mifare):
             'points': self.points
         }
 
-    def bytearray_to_str(self,value,byte):
-    """
-    Convert from bytearray format
-    to string.
-    It keep hexadecimal value
-    """
-    	"""for value in range (0,byte):
-    		hex_value = str(hex(values[value]))
-		    hex_value = hex_value.split("x")[1]
-		    result += hex_value + " "
-		return result[0:11]"""
+    def bytearray_to_str(self,value):
+        #for value in range (0,byte):
+    		#hex_value = str(hex(values[value]))
+		    #hex_value = hex_value.split("x")[1]
+		    #result += hex_value + " "
+		#return result[0:11]
         return str(hex(value[0])).split("x")[1]+" "+str(hex(value[1])).split("x")[1]+" "+str(hex(value[2])).split("x")[1]+" "+str(hex(value[3])).split("x")[1]
 
 
@@ -119,29 +103,29 @@ if uid:
     try:
         Wrong_Auth = tag.Dev_Auth(0)
         Wrong_Passw = tag.Dev_get_cardToken()
-        if !Wrong_Passw:
+        if not Wrong_Passw:
             tag.in_deselect()
             print('The tag has been correctly recognized')
 
-             while True:
+            while True:
                 fivehun = GPIO.input(23)
                 onethou = GPIO.input(24)
                 fivthou = GPIO.input(25)
                 if fivehun == False:
                     tag.points = '500'
                     break
-             	elif onethou == False:
-             		tag.points = '1000'
+                if onethou == False:
+                    tag.points = '1000'
                     break
-                elif fivthou == False:
-                	tag.points = '5000'
-                	break
+                if fivthou == False:
+                    tag.points = '5000'
+                    break
 
             add_or_sub = GPIO.input(12)
             if add_or_sub:
             	payload = tag.transfer_points()
-                r = requests.post(URL_add, data=payload)
-                print(r.json())
+            	r = requests.post(URL_add, data=payload)
+            	print(r.json())
             else:
                 payload = tag.transfer_points()
                 r = requests.post(URL_sub, data=payload)
@@ -157,46 +141,5 @@ else:
 GPIO.cleanup()
 
 #END OF PROGRAM
-
-#card.SAMconfigure()
-#card.set_max_retries(MIFARE_WAIT_FOR_ENTRY) # Waits until entry
-#uid = card.scan_field() # Capture Device's ID
-#tag.cardID = uid
-#print ('UID: ' + str(uid)) # Print ID NOTA: Revisar conversion de bytearray
-
-#if uid:
-    
-#    address = card.mifare_address(0,1) # Sets Password address
-#    card.mifare_auth_a(address,MIFARE_FACTORY_KEY)
-#    dev_pw = card.mifare_read(address)
-    
-    
-#    if password == dev_pw: # CONVERSION FROM BYTEARRAY
-
-#        address = card.mifare_address(0,2)
-#        tag.cardToken = card.mifare_read(address)
-        
-
-#        card.in_deselect()
-
-#        while True:
-            
-#            a = GPIO.input(23)
-#            if a == False:
-#                req.points = 500
-#                GPIO.output(24,True)
-#                time.sleep (0.5)
-#                GPIO.output(24,False)
-#                break
-            #elif
-
-#        print(req.cardToken)
-#        print(req.points)
-    
-#    else:
-#        print("Password Fatal Error")
-
-#else:
-#    GPIO.cleanup()
 
 
