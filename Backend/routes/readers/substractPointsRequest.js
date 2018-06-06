@@ -83,10 +83,12 @@ module.exports = function(app, models, errors, defs)
                                             // Register in log
                                             var log = new models.logSch();
                                             log.userID = user._id;
-                                            log.concept = "Payment of " + dataGot.points + " in the reader " + reader.readerID + " for " + reader.username;
+                                            log.concept = "Payment of " + dataGot.points + " in the reader " + reader.readerID + " from "+ user.username + " to " + reader.username;
                                             log.points = dataGot.points;
                                             log.server = reader.userID;
                                             log.save();
+                                            // Increase the points
+                                            models.userSch.update({"_id":reader.userID}, {$inc:{"balance":dataGot.points}}, function(err, res){});
                                             // Return
                                             res.json({cardID: card.uuid, error:0, result:{pointsAmountRemaining: user.balance, pointsSubstracted:dataGot.points}});
                                         }

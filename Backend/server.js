@@ -86,5 +86,8 @@ userTest.username = "test";
 userTest.password = "test";
 userTest.role = 0;
 userTest.linkedCard = card._id;
-userTest.save(); */
+userTest.save();
+
+*/
+
 
