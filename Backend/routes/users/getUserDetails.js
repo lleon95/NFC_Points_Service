@@ -54,7 +54,7 @@ module.exports = function(app, models, errors, defs, cookie)
                             
                         }
                         // Load last 10 transactions
-                        var logQuery = models.logSch.find({$or:[{"userID":userID},{"server":userID}]}).sort({"_id":-1}).limit(15);
+                        var logQuery = models.logSch.find({$or:[{"userID":userID},{"server":userID}]}).sort({"_id":-1}).limit(9);
                         logQuery.select("concept points created_at");
                         logQuery.exec(function(err, logs){
                             results["logs"] = logs;
