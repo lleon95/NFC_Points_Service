@@ -3,7 +3,7 @@
 ###  Tecnológico de Costa Rica - Escuela de Ing. Electrónica  ###
 ###  Laboratorio de Comunicaciones Eléctricas - EL5512        ###
 ###                                                           ###
-###  Profesor: Luis Paulina Méndez                            ###
+###  Profesor: Luis Paulino Méndez                            ###
 ###                                                           ###
 ###  Proyecto: NFC Points Service                             ###
 ###                                                           ###
